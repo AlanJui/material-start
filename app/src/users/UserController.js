@@ -22,6 +22,7 @@
     self.selectUser   = selectUser;
     self.toggleList   = toggleUsersList;
     self.showContactOptions  = showContactOptions;
+    self.makeContact  = makeContact;
 
     // Load all registered users
 
@@ -56,6 +57,30 @@
       self.selected = angular.isNumber(user) ? $scope.users[user] : user;
       self.toggleList();
     }
+
+		function makeContact(selectedUser) {
+
+			$mdBottomSheet.show({
+				controllerAs: 'vm',
+				controller: ['$mdBottomSheet', ContactSheetController],
+				templateUrl: './src/users/view/contactSheet.html',
+				parent: angular.element(document.getElementById('content'))
+			});
+
+			function ContactSheetController( $mdBottomSheet ) {
+				this.user = selectedUser;
+				this.actions = [
+					{ name: 'Phone'       , icon: 'phone'       , icon_url: 'assets/svg/phone.svg'},
+					{ name: 'Twitter'     , icon: 'twitter'     , icon_url: 'assets/svg/twitter.svg'},
+					{ name: 'Google+'     , icon: 'google_plus' , icon_url: 'assets/svg/google_plus.svg'},
+					{ name: 'Hangout'     , icon: 'hangouts'    , icon_url: 'assets/svg/hangouts.svg'}
+				];
+				this.submitContact = function(action) {
+					console.log(action.name);
+					$mdBottomSheet.hide(action);
+				};
+			}
+		}
 
     /**
      * Show the bottom sheet
