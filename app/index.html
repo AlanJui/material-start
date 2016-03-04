@@ -16,34 +16,43 @@
 
   <!-- Container #1 -->
   <md-toolbar layout="row">
+    <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show User List">
+      <md-icon md-svg-icon="menu"></md-icon>
+    </md-button>
     <h1>Angular Material - Starer App</h1>
   </md-toolbar>
 
   <!-- Container #2-->
-  <div flex layout="row">
+  <div class="container" layout="row" flex>
     <!-- Container #3 -->
-    <md-sidenav md-is-locked-open="true" class="md-whiteframe-4dp">
+    <md-sidenav
+        ng-click="ul.toggleList()"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-sm')"
+        class="md-whiteframe-4dp">
+
       <md-list>
         <md-list-item ng-repeat="u in ul.users">
           <md-button ng-click="ul.selectUser(u)" ng-class="{'selected:': u === ul.selected}">
-            <md-icon md-svg-src="{{u.avatar}}" class="avatar"></md-icon>
+            <md-icon md-svg-icon="{{u.avatar}}" class="avatar"></md-icon>
             {{u.name}}
           </md-button>
         </md-list-item>
       </md-list>
+
     </md-sidenav>
 
     <!-- Container #4 -->
     <md-content flex id="content">
       <!-- User details sample -->
-      <md-icon md-svg-src="{{ul.selected.avatar}}" class="avatar"></md-icon>
+      <md-icon md-svg-icon="{{ul.selected.avatar}}" class="avatar"></md-icon>
       <h2>{{ul.selected.name}}</h2>
       <p>
         {{ul.selected.content}}
       </p>
 
       <!-- Share button -->
-      <md-button class="contact" md-no-ink ng-click="ul.makeContact(ul.selected)"  aria-label="Share">
+      <md-button class="contact" md-no-ink ng-click="ul.makeContact(ul.selected)"  aria-label="Share with {{ul.selected.name}}">
         <md-icon md-svg-icon="share"></md-icon>
       </md-button>
     </md-content>
@@ -64,7 +73,12 @@
 
     angular
         .module('starterApp', [ 'ngMaterial', 'users' ])
-        .config(function ($mdIconProvider) {
+        .config(function ($mdThemingProvider, $mdIconProvider) {
+          // Set theme
+          $mdThemingProvider.theme('default')
+            .primaryPalette('brown')
+            .accentPalette('red');
+
           // Register the user 'avatar' icons
           $mdIconProvider.defaultIconSet('./assets/svg/avatars.svg', 128)
             .icon("menu", "./assets/svg/menu.svg", 24)

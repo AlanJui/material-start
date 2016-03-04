@@ -42,7 +42,13 @@
      * hide or Show the 'left' sideNav area
      */
     function toggleUsersList() {
-      var pending = $mdBottomSheet.hide() || $q.when(true);
+
+			/**
+			 * Hide or Show the 'left' sideNav area
+			 */
+			//$mdSidenav('left').toggle();
+
+			var pending = $mdBottomSheet.hide() || $q.when(true);
 
       pending.then(function(){
         $mdSidenav('left').toggle();
@@ -65,6 +71,8 @@
 				controller: ['$mdBottomSheet', ContactSheetController],
 				templateUrl: './src/users/view/contactSheet.html',
 				parent: angular.element(document.getElementById('content'))
+			}).then(function(clickedItem) {
+				clickedItem && $log.debug( clickedItem.name + ' clicked!');
 			});
 
 			function ContactSheetController( $mdBottomSheet ) {
@@ -75,8 +83,9 @@
 					{ name: 'Google+'     , icon: 'google_plus' , icon_url: 'assets/svg/google_plus.svg'},
 					{ name: 'Hangout'     , icon: 'hangouts'    , icon_url: 'assets/svg/hangouts.svg'}
 				];
+
 				this.submitContact = function(action) {
-					console.log(action.name);
+					//console.log(action.name);
 					$mdBottomSheet.hide(action);
 				};
 			}
