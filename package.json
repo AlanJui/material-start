@@ -20,6 +20,9 @@
       "text": "github:systemjs/plugin-text@^0.0.2"
     },
     "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4",
       "traceur": "github:jmcriffey/bower-traceur@0.0.91",
       "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.91"
     }
@@ -33,6 +36,7 @@
     "karma-junit-reporter": "^0.2.2"
   },
   "scripts": {
-    "prestart": "npm update"
+    "prestart": "npm update",
+    "serve": "browser-sync start --files 'app/index.html, app/**/*.html, app/src/**/*.js' --server 'app'"
   }
 }
